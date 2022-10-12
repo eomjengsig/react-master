@@ -1,55 +1,18 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App";
-import { ThemeProvider } from "styled-components";
-import { darktheme, theme } from "./theme";
+import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { render } from "@testing-library/react";
+import { RecoilRoot } from "recoil";
+import App from "./App";
 
 const queryClient = new QueryClient();
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
-export let themeV = true;
-
-const handleTheme = () => {
-  if (themeV === true) {
-    themeV = false;
-    root.render(
+ReactDOM.render(
+  <React.StrictMode>
+    <RecoilRoot>
       <QueryClientProvider client={queryClient}>
-        <button onClick={handleTheme}>theme change</button>
-
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
+        <App />
       </QueryClientProvider>
-    );
-  } else if (themeV === false) {
-    themeV = true;
-    console.log(themeV);
-    root.render(
-      <QueryClientProvider client={queryClient}>
-        <button onClick={handleTheme}>theme change</button>
-
-        <ThemeProvider theme={darktheme}>
-          <App />
-        </ThemeProvider>
-      </QueryClientProvider>
-    );
-  }
-};
-
-root.render(
-  <QueryClientProvider client={queryClient}>
-    <button onClick={handleTheme}>theme change</button>
-
-    <ThemeProvider theme={darktheme}>
-      <App />
-    </ThemeProvider>
-  </QueryClientProvider>
+    </RecoilRoot>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
